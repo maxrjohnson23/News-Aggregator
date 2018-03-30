@@ -1,0 +1,23 @@
+{
+  "name": "news-aggregator",
+  "version": "1.0.0",
+  "description": "An Express/Node application for aggregating news articles, backed by MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxrjohnson23/News-Aggregator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxrjohnson23/News-Aggregator/issues"
+  },
+  "homepage": "https://github.com/maxrjohnson23/News-Aggregator#readme",
+  "dependencies": {
+    "npm": "^5.8.0"
+  }
+}
