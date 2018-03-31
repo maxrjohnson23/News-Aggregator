@@ -1,5 +1,7 @@
 const cheerio = require("cheerio");
 const request = require("request");
+const db = require("../models");
+
 
 function retrieveArticles() {
 
@@ -9,33 +11,42 @@ function retrieveArticles() {
             if (error) {
                 reject(err);
             }
+            // Load HTML for use with Cheerio
             const $ = cheerio.load(html);
 
-            // An empty array to save the data that we'll scrape
+            // List of articles to return
             let articles = [];
 
+            // Iterate the articles and scrape data
             $("article.article").each(function (i, element) {
 
-                // Save the text of the element in a "title" variable
+                // Retrieve article information from the html
                 let title = $(element).find("header h2").text();
-                let articleLink = $(element).find("a.overlay").attr("href");
+                let link = $(element).find("a.overlay").attr("href");
                 let excerpt = $(element).find("header p.excerpt").text();
 
-                console.log(title);
-                console.log(excerpt);
-                console.log(articleLink);
-
-                if (title && excerpt && articleLink) {
+                // Create new article to be saved
+                if (title && link && excerpt) {
                     articles.push({
                         title,
-                        excerpt,
-                        articleLink
+                        link,
+                        excerpt
                     });
                 }
             });
-            resolve(articles);
+
+            // Bulk insert articles to the database
+            db.Article.insertMany(articles)
+                .then(function (dbArticle) {
+                    resolve(dbArticle);
+                })
+                .catch(function (err) {
+                    reject(err);
+                });
         });
     });
 }
 
-module.exports = retrieveArticles;
+module.exports = {
+    retrieveArticles: retrieveArticles
+};
