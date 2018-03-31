@@ -12,6 +12,10 @@ const ArticleSchema = new Schema({
         type: String,
         required: true
     },
+    saved: {
+        type: Boolean,
+        default: false
+    },
     // An article can have many notes
     // The ref property links the ObjectId to the Note model
     notes: [{
