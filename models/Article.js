@@ -14,10 +14,10 @@ const ArticleSchema = new Schema({
     },
     // An article can have many notes
     // The ref property links the ObjectId to the Note model
-    note: {
+    notes: [{
         type: Schema.Types.ObjectId,
         ref: "Note"
-    }
+    }]
 });
 
 // Create a model from the schema

@@ -10,7 +10,8 @@ const NoteSchema = new Schema({
     text: {
         type: String,
         required: "Note text is required"
-    }
+    },
+    article: {type: Schema.Types.ObjectId, ref: 'Article'}
 });
 
 // Create a model from the schema
