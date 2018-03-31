@@ -1,19 +1,17 @@
 const express = require("express");
-const mongojs = require("mongojs");
+const mongoose = require("mongoose");
 const scraper = require("./scripts/scraper");
-
-
+const db = require("./models");
 
 const app = express();
 
-const databaseUrl = "news";
-const collections = ["articles"];
-
-const db = mongojs(databaseUrl, collections);
-
-db.on("error", function(error) {
-    console.log("Database Error:", error);
+mongoose.connect("mongodb://localhost/news").then(() => {
+    console.log('Connected to the database');
+}).catch(err => {
+    console.log(err);
 });
+
+
 
 app.get("/", function(req, res) {
     db.articles.find({}, (err, data) => {
@@ -25,7 +23,7 @@ app.get("/", function(req, res) {
 });
 
 app.get("/articles", (req, res) => {
-    scraper().then((articles) => {
+    scraper.retrieveArticles().then((articles) => {
         res.json(articles);
     }).catch((err) => {
         res.status(500).send(err);
