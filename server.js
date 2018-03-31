@@ -58,6 +58,19 @@ app.get("/articles/:id", (req, res) => {
     });
 });
 
+// Update specific article by id.  Used primarily for setting saved value on the Article
+app.patch("/articles/:id", (req, res) => {
+    db.Article.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true}).then((data) => {
+        if (data) {
+            res.json(data);
+        } else {
+            res.status(404).send({error: "No article found for this id"});
+        }
+    }).catch(err => {
+        res.status(500).send(err);
+    });
+});
+
 // Create a note tied to a specific article
 app.post("/articles/:id/notes/", (req, res) => {
 
