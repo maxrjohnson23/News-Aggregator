@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/maxrjohnson23/News-Aggregator#readme",
   "dependencies": {
+    "express": "^4.16.3",
+    "mongojs": "^2.5.0",
     "npm": "^5.8.0"
   }
 }
