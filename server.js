@@ -1,5 +1,8 @@
 const express = require("express");
 const mongojs = require("mongojs");
+const scraper = require("./scripts/scraper");
+
+
 
 const app = express();
 
@@ -13,7 +16,20 @@ db.on("error", function(error) {
 });
 
 app.get("/", function(req, res) {
-    res.send("Hello world");
+    db.articles.find({}, (err, data) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+        res.json(data);
+    })
+});
+
+app.get("/articles", (req, res) => {
+    scraper().then((articles) => {
+        res.json(articles);
+    }).catch((err) => {
+        res.status(500).send(err);
+    });
 });
 
 app.listen(3000, function() {
