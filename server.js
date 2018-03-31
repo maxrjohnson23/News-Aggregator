@@ -29,6 +29,15 @@ app.get("/", function (req, res) {
 
 // Retrieve all articles
 app.get("/articles", (req, res) => {
+    db.Article.find().then((articles) => {
+        res.json(articles);
+    }).catch((err) => {
+        res.status(500).send(err);
+    });
+});
+
+// Retrieve all articles
+app.get("/scrape", (req, res) => {
     scraper.retrieveArticles().then((articles) => {
         res.json(articles);
     }).catch((err) => {

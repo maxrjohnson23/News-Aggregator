@@ -30,7 +30,8 @@ function retrieveArticles() {
                     articles.push({
                         title,
                         link,
-                        excerpt
+                        excerpt,
+                        saved: false
                     });
                 }
             });
