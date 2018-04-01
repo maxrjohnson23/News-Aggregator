@@ -18,13 +18,15 @@
   },
   "homepage": "https://github.com/maxrjohnson23/News-Aggregator#readme",
   "dependencies": {
+    "body-parser": "latest",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
     "mongojs": "^2.5.0",
     "mongoose": "^5.0.12",
+    "morgan": "^1.9.0",
     "nodemon": "^1.17.3",
     "npm": "^5.8.0",
-    "request": "^2.85.0",
-    "body-parser": "latest"
+    "request": "^2.85.0"
   }
 }

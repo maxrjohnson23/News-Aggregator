@@ -9,7 +9,7 @@ function retrieveArticles() {
         request("https://arstechnica.com/gadgets/", (error, response, html) => {
 
             if (error) {
-                reject(err);
+                reject(error);
             }
             // Load HTML for use with Cheerio
             const $ = cheerio.load(html);
