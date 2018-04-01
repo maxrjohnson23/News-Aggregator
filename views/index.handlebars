@@ -12,26 +12,26 @@
 <div class="filler"></div>
 
 {{#each articles}}
-    <figure class="panel panel-default">
-        <a href="{{link}}" class="" target="_blank">
-            <div class="imgBox">
-                <img src="{{imageUrl}}" alt="" class="storyImg" height="150">
+    <article class="card m-3 p-2">
+        <div class="row no-gutters">
+            <figure class="col-auto">
+                <img src="{{imageUrl}}" class="img-fluid" alt="Article Image">
+            </figure>
+            <div class="col">
+                <div class="card-block p-2">
+                    <a href="{{link}}"><h4 class="card-title">{{title}}</h4></a>
+                    <p class="card-text">{{summary}}</p>
+                    {{#if saved}}
+                        <a href="#" class="saveArticle btn btn-danger float-right mr-3"
+                           data-id="{{_id}}" data-saved="true">Remove Saved</a>
+                    {{ else }}
+                        <a href="#" class="saveArticle btn btn-primary float-right mr-3"
+                           data-id="{{_id}}" data-saved="false">Save</a>
+                    {{/if}}
+                </div>
             </div>
-        </a>
-        <a href="{{link}}" class="storyLink" target="_blank">
-            <h2 class="article-title">{{title}}</h2>
-        </a>
-        <h5 class="article-summary">{{summary}}</h5>
-        {{#if saved}}
-            <button class="saveArticle btn btn-danger" data-id="{{_id}}" data-saved="true">Unsave
-                Article
-            </button>
-        {{ else }}
-            <button class="saveArticle btn btn-primary" data-id="{{_id}}" data-saved="false">Save
-                Article
-            </button>
-        {{/if}}
-    </figure>
+        </div>
+    </article>
 {{/each}}
 
 {{!-- Modal for alerting number of scraped articles --}}
