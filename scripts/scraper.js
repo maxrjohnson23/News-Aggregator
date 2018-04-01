@@ -36,13 +36,18 @@ function retrieveArticles() {
                 }
             });
 
-            // Bulk insert articles to the database
-            db.Article.insertMany(articles)
-                .then(function (dbArticle) {
-                    resolve(dbArticle);
+            // Bulk insert articles to the database, duplicates will be filtered by article title
+            db.Article.insertMany(articles, {ordered: false})
+                .then((data) => {
+                    // Return number of articles
+                    resolve(data.length);
                 })
                 .catch(function (err) {
-                    reject(err);
+                    // Allow duplicate entry error to resolve
+                    if (err.code !== 11000) {
+                        reject(err);
+                    }
+                    resolve(err.result.nInserted);
                 });
         });
     });

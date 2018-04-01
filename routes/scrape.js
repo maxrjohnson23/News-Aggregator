@@ -3,9 +3,9 @@ const router = express.Router();
 const scraper = require("../scripts/scraper");
 
 // Scrape all articles to database
-router.get("/scrape", (req, res) => {
+router.get("/", (req, res) => {
     scraper.retrieveArticles()
-        .then(articles => res.json(articles))
+        .then(articleCount => res.json(articleCount))
         .catch(err => res.status(500).send(err));
 });
 

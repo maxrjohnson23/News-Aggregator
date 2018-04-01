@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../models");
 
 // Get specific article by id with populated notes
-router.get("/:id", (req, res) => {
+router.get("/articles/:id", (req, res) => {
     db.Article.findById(req.params.id).populate("notes")
         .then(data => {
             if (data) {
@@ -15,7 +15,7 @@ router.get("/:id", (req, res) => {
 });
 
 // Update specific article by id.  Used primarily for setting saved value on the Article
-router.patch("/:id", (req, res) => {
+router.patch("/articles/:id", (req, res) => {
     db.Article.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true}).then((data) => {
         if (data) {
             res.json(data);
@@ -29,7 +29,7 @@ router.patch("/:id", (req, res) => {
 
 
 // Create a note tied to a specific article
-router.post("/:id/notes/", (req, res) => {
+router.post("/articles/:id/notes/", (req, res) => {
 
     db.Note.create(req.body)
         .then((note) => {

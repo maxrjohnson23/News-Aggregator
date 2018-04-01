@@ -11,10 +11,13 @@ router.get("/", (req, res) => {
 });
 
 // Render saved articles page
-router.get('/savedArticles', (req, res) => {
+router.get("/savedArticles", (req, res) => {
     db.Article
         .find({saved: true})
-        .then(result => res.render('saved', {articles: result}))
+        .then(result => {
+            console.log(`Found ${result}`);
+            res.render("savedArticles", {articles: result})
+        })
         .catch(err => res.json(err));
 });
 

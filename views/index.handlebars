@@ -1,0 +1,60 @@
+<header class="header">
+    <h1 id="">Articles</h1>
+    <nav class="button-group">
+        <button class="button-dark" id="scrape" data-toggle="modal" data-target="#alertModal">
+            Retrieve New Articles
+        </button>
+        <a href="/savedArticles">
+            <button class="button-dark" id="viewSaved">My Saved Articles</button>
+        </a>
+    </nav>
+</header>
+<div class="filler"></div>
+
+{{#each articles}}
+    <figure class="storyPanel clearfix">
+        <a href="{{link}}" class="" target="_blank">
+            <div class="imgBox">
+                <img src="{{imgUrl}}" alt="" class="storyImg" height="150">
+            </div>
+        </a>
+        <a href="{{link}}" class="storyLink" target="_blank">
+            <h2 class="article-title">{{title}}</h2>
+        </a>
+        <h5 class="article-excerpt">{{excerpt}}</h5>
+        <h6 class="storySummary">{{summary}}</h6>
+        {{#if saved}}
+            <button class="saveArticle" data-id="{{_id}}" data-saved="true">Unsave Article</button>
+        {{ else }}
+            <button class="saveArticle" data-id="{{_id}}" data-saved="false">Save Article</button>
+        {{/if}}
+    </figure>
+{{/each}}
+
+{{!-- Modal for alerting number of scraped articles --}}
+<div id="alertModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <h2>You have scraped <span id="numArticles"></span> new articles</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- error modal --}}
+<div id="error" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h2>There was an error processing your request. Please try again later.</h2>
+            </div>
+        </div>
+    </div>
+</div>
