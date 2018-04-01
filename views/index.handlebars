@@ -12,21 +12,24 @@
 <div class="filler"></div>
 
 {{#each articles}}
-    <figure class="storyPanel clearfix">
+    <figure class="panel panel-default">
         <a href="{{link}}" class="" target="_blank">
             <div class="imgBox">
-                <img src="{{imgUrl}}" alt="" class="storyImg" height="150">
+                <img src="{{imageUrl}}" alt="" class="storyImg" height="150">
             </div>
         </a>
         <a href="{{link}}" class="storyLink" target="_blank">
             <h2 class="article-title">{{title}}</h2>
         </a>
-        <h5 class="article-excerpt">{{excerpt}}</h5>
-        <h6 class="storySummary">{{summary}}</h6>
+        <h5 class="article-summary">{{summary}}</h5>
         {{#if saved}}
-            <button class="saveArticle" data-id="{{_id}}" data-saved="true">Unsave Article</button>
+            <button class="saveArticle btn btn-danger" data-id="{{_id}}" data-saved="true">Unsave
+                Article
+            </button>
         {{ else }}
-            <button class="saveArticle" data-id="{{_id}}" data-saved="false">Save Article</button>
+            <button class="saveArticle btn btn-primary" data-id="{{_id}}" data-saved="false">Save
+                Article
+            </button>
         {{/if}}
     </figure>
 {{/each}}

@@ -20,7 +20,7 @@ $(document).ready(function () {
                 }
             });
         }
-    }//end of sendNote function
+    }
 
 
     //function to display error modal on ajax error
@@ -43,7 +43,7 @@ $(document).ready(function () {
             .attr('data-article-id', articleId)
             .addClass('note')
             .appendTo('#noteArea')
-    }//end of showNote function
+    }
 
     //event listener to reload root when user closes modal showing
     //number of scraped articles
@@ -87,7 +87,7 @@ $(document).ready(function () {
                 showErrorModal(error);
             }
         });
-    });//end of #saveArticle click event
+    });
 
     //click event to open note modal and populate with notes
     $('.addNote').on('click', function (e) {
@@ -108,20 +108,20 @@ $(document).ready(function () {
                 showErrorModal(error);
             }
         });
-    });//end of .addNote click event
+    });
 
     //click event to create a note
     $('#submitNote').on('click', function (e) {
         e.preventDefault();
         sendNote($(this));
-    });//end of #submitNote click event
+    });
 
     //keypress event to allow user to submit note with enter key
     $('#noteBodyEntry').on('keypress', function (e) {
         if (e.keyCode == 13) {
             sendNote($(this));
         }
-    });//end of #noteBodyEntry keypress(enter) event
+    });
 
     //click event to delete an article from savedArticles
     $('.deleteArticle').on('click', function (e) {
@@ -137,7 +137,7 @@ $(document).ready(function () {
                 showErrorModal(error);
             }
         })
-    });//end of .deleteArticle click event
+    });
 
     //click event to delete a note from a saved article
     $(document).on('click', '.deleteNote', function (e) {
@@ -159,7 +159,7 @@ $(document).ready(function () {
                 showErrorModal(error);
             }
         });
-    });//end of .deleteNote click event
+    });
 
     //click event to retrieve the title and body of a single note
     //and populate the note modal inputs with it
@@ -178,6 +178,6 @@ $(document).ready(function () {
                 showErrorModal(error);
             }
         })
-    })//end of .note click event
+    })
 
-});//end of document ready function
+});

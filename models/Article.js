@@ -8,11 +8,12 @@ const ArticleSchema = new Schema({
         required: true,
         unique: true
     },
-    excerpt: String,
+    summary: String,
     link: {
         type: String,
         required: true
     },
+    imageUrl: String,
     saved: {
         type: Boolean,
         default: false

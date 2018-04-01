@@ -23,14 +23,18 @@ function retrieveArticles() {
                 // Retrieve article information from the html
                 let title = $(element).find("header h2").text();
                 let link = $(element).find("a.overlay").attr("href");
-                let excerpt = $(element).find("header p.excerpt").text();
+                let summary = $(element).find("header p.excerpt").text();
+
+                let imageUrl = $(element).find("figure div.listing").css('background-image');
+                imageUrl = imageUrl.replace('url(', '').replace(')', '').replace(/["']/gi, "");
 
                 // Create new article to be saved
-                if (title && link && excerpt) {
+                if (title && link && summary) {
                     articles.push({
                         title,
                         link,
-                        excerpt,
+                        summary,
+                        imageUrl,
                         saved: false
                     });
                 }
