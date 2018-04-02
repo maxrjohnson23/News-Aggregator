@@ -4,7 +4,7 @@ const db = require("../models");
 
 // Get specific article by id with populated notes
 router.get("/articles/:id", (req, res) => {
-    db.Article.findById(req.params.id).populate("notes")
+    db.Article.findById(req.params.id)
         .then(data => {
             if (data) {
                 res.json(data);
@@ -27,9 +27,21 @@ router.patch("/articles/:id", (req, res) => {
     });
 });
 
+// Get notes for a specific article
+router.get("/articles/:id/notes", (req, res) => {
+    db.Article.findById(req.params.id).populate("notes")
+        .then(data => {
+            if (data) {
+                res.json(data);
+            }
+        }).catch(err => {
+        res.status(500).send(err);
+    });
+});
+
 
 // Create a note tied to a specific article
-router.post("/articles/:id/notes/", (req, res) => {
+router.post("/articles/:id/notes", (req, res) => {
 
     db.Note.create(req.body)
         .then((note) => {

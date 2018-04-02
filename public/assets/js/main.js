@@ -81,7 +81,7 @@ $(document).ready(function () {
                 saved: !currentlySaved
             },
             success: function (response) {
-                window.location.href = '/';
+                window.location.reload();
             },
             error: function (error) {
                 showErrorModal(error);
@@ -90,17 +90,17 @@ $(document).ready(function () {
     });
 
     //click event to open note modal and populate with notes
-    $('.addNote').on('click', function (e) {
+    $('.addNote').on('click', function () {
         $('#noteArea').empty();
         $('#noteTitleEntry, #noteBodyEntry').val('');
-        let id = $(this).data('id');
-        $('#submitNote, #noteBodyEntry').attr('data-id', id)
+        let articleId = $(this).data('id');
+
         $.ajax({
-            url: '/notes/getNotes/' + id,
+            url: `api/articles/${articleId}/notes`,
             type: 'GET',
             success: function (data) {
                 $.each(data.notes, function (i, item) {
-                    showNote(item, id)
+                    showNote(item, articleId)
                 });
                 $('#noteModal').modal('show');
             },
