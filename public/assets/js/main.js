@@ -59,12 +59,10 @@ $(document).ready(function () {
             type: 'GET',
             success: function (response) {
                 $('#numArticles').text(response);
+                $('#alertModal').modal('show');
             },
             error: function (error) {
                 showErrorModal(error);
-            },
-            complete: function (result) {
-                $('#alertModal').modal('show');
             }
         });
     });
@@ -91,18 +89,18 @@ $(document).ready(function () {
 
     //click event to open note modal and populate with notes
     $('.addNote').on('click', function () {
-        $('#noteArea').empty();
-        $('#noteTitleEntry, #noteBodyEntry').val('');
         let articleId = $(this).data('id');
 
         $.ajax({
             url: `api/articles/${articleId}/notes`,
             type: 'GET',
             success: function (data) {
-                $.each(data.notes, function (i, item) {
-                    showNote(item, articleId)
-                });
-                $('#noteModal').modal('show');
+                let source = $("#notesModal-hbs").html();
+                let template = Handlebars.compile(source);
+                let html = template(data);
+
+                $('#noteModalPlace').html(html);
+                $('#noteModalPlace').modal('show');
             },
             error: function (error) {
                 showErrorModal(error);
