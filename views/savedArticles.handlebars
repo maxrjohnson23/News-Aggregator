@@ -6,7 +6,8 @@
     </ul>
     <ul class="navbar-nav">
         <li class="nav-item active">
-            <a class="nav-link" href="/">All Articles</a>
+            <button class="btn btn-outline-dark"><a class="nav-link" href="/">All Articles</a>
+            </button>
         </li>
     </ul>
 </nav>
@@ -67,22 +68,20 @@
             <div class="modal-body">
                 \{{#each notes}}
                 <ul class="list-group note-container mb-3">
-                    <li class="list-group-item note">\{{title}}-\{{text}}
+                    <li class="list-group-item note">\{{text}}
                         <button class="delete-note btn btn-danger float-right"
                                 data-note-id="\{{_id}}">x
                         </button>
                     </li>
                 </ul>
                 \{{/each}}
-                <input id="note-title" type="text" placeholder="Add Title"/>
-                <textarea id="note-text" placeholder="New Note" rows="4" cols="50"></textarea>
-                <button id="save-note" class="btn btn-success save" data-article-id="\{{_id}}">Save
-                </button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                </button>
+                <form id="note-form">
+                <textarea id="note-text" class="form-control" placeholder="New Note" rows="3"
+                          required></textarea>
+                    <button type="submit" id="save-note" class="btn btn-success float-right mt-1"
+                            data-article-id="\{{_id}}">Save
+                    </button>
+                </form>
             </div>
         </div>
     </div>

@@ -73,12 +73,14 @@ $(document).ready(function () {
 
 
     // Save note click event
-    $(document).on('click', '#save-note', function () {
-        let articleId = $(this).data('article-id');
+    $(document).on('submit', '#note-form', function (e) {
+        e.preventDefault();
+        let noteText = $("#note-text").val().trim();
+        let articleId = $("#save-note").data('article-id');
+
         let note = {
             articleId: articleId,
-            title: $('#note-title').val().trim(),
-            text: $('#note-text').val().trim()
+            text: noteText
         };
 
         $.ajax({
@@ -91,8 +93,7 @@ $(document).ready(function () {
                 let html = template(data);
 
                 $('#noteModal').html(html);
-                $('#noteModal').modal('show');
-                $('#note-title, #note-text').val('');
+                $('#note-text').val('').focus();
             },
             error: function (error) {
                 showErrorModal(error);
@@ -102,9 +103,9 @@ $(document).ready(function () {
     });
 
     // Allow user to submit note with enter key
-    $('#note-text').on('keypress', function (e) {
+    $(document).on("keypress", "#note-text", function (e) {
         if (e.keyCode === 13) {
-            $("#save-note").click();
+            $("#note-form").submit();
         }
     });
 
@@ -123,8 +124,7 @@ $(document).ready(function () {
                 let html = template(data);
 
                 $('#noteModal').html(html);
-                $('#noteModal').modal('show');
-                $('#note-title, #note-text').val('');
+                $('#note-text').val('');
             },
             error: function (error) {
                 showErrorModal(error);

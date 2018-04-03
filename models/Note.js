@@ -3,10 +3,6 @@ const Schema = mongoose.Schema;
 
 // Define the schema for the Notes
 const NoteSchema = new Schema({
-    title: {
-        type: String,
-        required: "Note title is required"
-    },
     text: {
         type: String,
         required: "Note text is required"
