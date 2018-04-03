@@ -1,7 +1,37 @@
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
     background-image: url("../images/pixels.png");
+    margin-bottom: 85px;
 }
 
 #logo {
     width: 350px;
+}
+
+#ars {
+    height: 40px;
+    display: block;
+    margin: auto;
+    padding-top: 5px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    height: 85px;
+    text-align: center;
+    width: 100%;
+    background-color: #343A40;
+    border-top: 5px solid #56A247;
+}
+
+footer small {
+    line-height: 40px;
+    color: #56A247;
+    font-size: 12px;
 }
