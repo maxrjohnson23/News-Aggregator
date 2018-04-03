@@ -27,7 +27,7 @@ router.patch("/articles/:id", (req, res) => {
     });
 });
 
-// Get notes for a specific article
+// Get list of notes for a specific article
 router.get("/articles/:id/notes", (req, res) => {
     db.Article.findById(req.params.id).populate("notes")
         .then(data => {
@@ -40,20 +40,28 @@ router.get("/articles/:id/notes", (req, res) => {
 });
 
 
-// Create a note tied to a specific article
+// Create a note for to a specific article
 router.post("/articles/:id/notes", (req, res) => {
 
     db.Note.create(req.body)
         .then((note) => {
             // If the note was created, add it to the selected Article
-            return db.Article.findOneAndUpdate({_id: req.params.id}, {$push: {notes: note._id}}, {new: true});
+            return db.Article.findOneAndUpdate({_id: req.params.id}, {$push: {notes: note._id}}, {new: true}).populate("notes");
         })
-        .then(function (article) {
-            res.json(article);
+        .then(article => res.json(article))
+        .catch(err => res.json(err));
+});
+
+// Delete note from article
+router.delete("/articles/:articleId/notes/:noteId", (req, res) => {
+
+    db.Note.remove({_id: req.params.noteId})
+        .then(() => {
+            // Remove note from the referencing article
+            return db.Article.findOneAndUpdate({_id: req.params.articleId}, {$pull: {notes: {_id: req.params.noteId}}}, {new: true}).populate("notes");
         })
-        .catch(function (err) {
-            res.json(err);
-        });
+        .then(article => res.json(article))
+        .catch(err => res.json(err));
 });
 
 

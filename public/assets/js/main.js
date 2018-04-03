@@ -1,49 +1,11 @@
 $(document).ready(function () {
 
-    //function to post a note to server
-    function sendNote(element) {
-        let note = {};
-        note.articleId = $(element).attr('data-id'),
-            note.title = $('#noteTitleEntry').val().trim();
-        note.body = $('#noteBodyEntry').val().trim();
-        if (note.title && note.body) {
-            $.ajax({
-                url: '/notes/createNote',
-                type: 'POST',
-                data: note,
-                success: function (response) {
-                    showNote(response, note.articleId);
-                    $('#noteBodyEntry, #noteTitleEntry').val('');
-                },
-                error: function (error) {
-                    showErrorModal(error);
-                }
-            });
-        }
-    }
-
 
     //function to display error modal on ajax error
     function showErrorModal(error) {
         $('#error').modal('show')
     }
 
-
-    //function to display notes in notemodal
-    function showNote(element, articleId) {
-        let $title = $('<p>')
-            .text(element.title)
-            .addClass('noteTitle')
-        let $deleteButton = $('<button>')
-            .text('X')
-            .addClass('deleteNote');
-        let $note = $('<div>')
-            .append($deleteButton, $title)
-            .attr('data-note-id', element._id)
-            .attr('data-article-id', articleId)
-            .addClass('note')
-            .appendTo('#noteArea')
-    }
 
     //event listener to reload root when user closes modal showing
     //number of scraped articles
@@ -88,19 +50,20 @@ $(document).ready(function () {
     });
 
     //click event to open note modal and populate with notes
-    $('.addNote').on('click', function () {
+    $('.view-notes').on('click', function () {
         let articleId = $(this).data('id');
 
         $.ajax({
             url: `api/articles/${articleId}/notes`,
             type: 'GET',
             success: function (data) {
+                data.articleId = articleId;
                 let source = $("#notesModal-hbs").html();
                 let template = Handlebars.compile(source);
                 let html = template(data);
 
-                $('#noteModalPlace').html(html);
-                $('#noteModalPlace').modal('show');
+                $('#noteModal').html(html);
+                $('#noteModal').modal('show');
             },
             error: function (error) {
                 showErrorModal(error);
@@ -108,50 +71,60 @@ $(document).ready(function () {
         });
     });
 
-    //click event to create a note
-    $('#submitNote').on('click', function (e) {
-        e.preventDefault();
-        sendNote($(this));
-    });
 
-    //keypress event to allow user to submit note with enter key
-    $('#noteBodyEntry').on('keypress', function (e) {
-        if (e.keyCode == 13) {
-            sendNote($(this));
-        }
-    });
+    // Save note click event
+    $(document).on('click', '#save-note', function () {
+        let articleId = $(this).data('article-id');
+        let note = {
+            articleId: articleId,
+            title: $('#note-title').val().trim(),
+            text: $('#note-text').val().trim()
+        };
 
-    //click event to delete an article from savedArticles
-    $('.deleteArticle').on('click', function (e) {
-        e.preventDefault();
-        let id = $(this).data('id');
         $.ajax({
-            url: '/articles/deleteArticle/' + id,
-            type: 'DELETE',
-            success: function (response) {
-                window.location.href = '/articles/viewSaved'
+            url: `/api/articles/${articleId}/notes`,
+            type: 'POST',
+            data: note,
+            success: function (data) {
+                let source = $("#notesModal-hbs").html();
+                let template = Handlebars.compile(source);
+                let html = template(data);
+
+                $('#noteModal').html(html);
+                $('#noteModal').modal('show');
+                $('#note-title, #note-text').val('');
             },
             error: function (error) {
                 showErrorModal(error);
             }
-        })
+        });
+
     });
+
+    // Allow user to submit note with enter key
+    $('#note-text').on('keypress', function (e) {
+        if (e.keyCode === 13) {
+            $("#save-note").click();
+        }
+    });
+
 
     //click event to delete a note from a saved article
-    $(document).on('click', '.deleteNote', function (e) {
-        e.stopPropagation();
-        let thisItem = $(this);
-        let ids = {
-            noteId: $(this).parent().data('note-id'),
-            articleId: $(this).parent().data('article-id')
-        }
+    $(document).on('click', '.delete-note', function () {
+        let articleId = $("#save-note").data("article-id");
+        let noteId = $(this).data("note-id");
 
         $.ajax({
-            url: '/notes/deleteNote',
-            type: 'POST',
-            data: ids,
-            success: function (response) {
-                thisItem.parent().remove();
+            url: `/api/articles/${articleId}/notes/${noteId}`,
+            type: 'DELETE',
+            success: function (data) {
+                let source = $("#notesModal-hbs").html();
+                let template = Handlebars.compile(source);
+                let html = template(data);
+
+                $('#noteModal').html(html);
+                $('#noteModal').modal('show');
+                $('#note-title, #note-text').val('');
             },
             error: function (error) {
                 showErrorModal(error);
@@ -159,23 +132,5 @@ $(document).ready(function () {
         });
     });
 
-    //click event to retrieve the title and body of a single note
-    //and populate the note modal inputs with it
-    $(document).on('click', '.note', function (e) {
-        e.stopPropagation();
-        let id = $(this).data('note-id');
-        $.ajax({
-            url: '/notes/getSingleNote/' + id,
-            type: 'GET',
-            success: function (note) {
-                $('#noteTitleEntry').val(note.title);
-                $('#noteBodyEntry').val(note.body);
-            },
-            error: function (error) {
-                console.log(error)
-                showErrorModal(error);
-            }
-        })
-    })
 
 });

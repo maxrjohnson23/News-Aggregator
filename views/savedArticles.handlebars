@@ -22,7 +22,7 @@
                     <button class="saveArticle btn btn-danger float-right mr-3" data-id="{{_id}}"
                             data-saved="true">Remove Saved
                     </button>
-                    <button class="addNote btn btn-secondary float-right mr-3" data-id="{{_id}}">
+                    <button class="view-notes btn btn-secondary float-right mr-3" data-id="{{_id}}">
                         Article Notes
                     </button>
                 </div>
@@ -48,7 +48,10 @@
     </div>
 </div>
 
-<!--Handlebars template for the Notes modal-->
+<!--Anchor for hbs template-->
+<div id="noteModal" class="modal" tabindex="-1" role="dialog"></div>
+
+<!--Client-rendered Handlebars template for the Notes modal - blackslashes escape elements from server rendering-->
 <script id="notesModal-hbs" type="text/x-handlebars-template">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -60,18 +63,23 @@
             </div>
             <div class="modal-body">
                 \{{#each notes}}
-                <ul class="list-group note-container">
+                <ul class="list-group note-container mb-3">
                     <li class="list-group-item note">\{{title}}-\{{text}}
-                        <button class="btn btn-danger noteDelete" data-note-id="{{_id}}">x</button>
+                        <button class="delete-note btn btn-danger float-right"
+                                data-note-id="\{{_id}}">x
+                        </button>
                     </li>
                 </ul>
                 \{{/each}}
-                <textarea placeholder="New Note" rows="4" cols="50"></textarea>
-                <button class="btn btn-success save" data-article-id="\{{articleId}}">Save</button>
+                <input id="note-title" type="text" placeholder="Add Title"/>
+                <textarea id="note-text" placeholder="New Note" rows="4" cols="50"></textarea>
+                <button id="save-note" class="btn btn-success save" data-article-id="\{{_id}}">Save
+                </button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                </button>
             </div>
         </div>
     </div>
