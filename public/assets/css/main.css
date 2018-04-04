@@ -6,24 +6,26 @@ html {
 
 body {
     background-image: url("../images/pixels.png");
-    margin-bottom: 85px;
+    margin-bottom: 50px;
 }
 
 #logo {
     width: 350px;
 }
 
+.article {
+    box-shadow: 3px 3px 15px;
+}
+
 #ars {
     height: 40px;
-    display: block;
-    margin: auto;
     padding-top: 5px;
 }
 
 footer {
     position: absolute;
     bottom: 0;
-    height: 85px;
+    height: 50px;
     text-align: center;
     width: 100%;
     background-color: #343A40;

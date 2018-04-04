@@ -7,9 +7,9 @@ const logger = require("morgan");
 const db = require("./models");
 
 // Routers
-const indexRouter = require('./routes/index');
-const apiRouter = require('./routes/api');
-const scrapeRouter = require('./routes/scrape');
+const indexRouter = require('./routes/htmlRoutes');
+const apiRouter = require('./routes/apiRoutes');
+const scrapeRouter = require('./routes/scrapeRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
