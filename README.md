@@ -1,5 +1,5 @@
 # Tech-Pulse
-###An Express/Node application for aggregating tech news articles, backed by MongoDB
+### An Express/Node application for aggregating tech news articles, backed by MongoDB
 
 ### Topics Covered
 * Model-View-Controller (MVC)
